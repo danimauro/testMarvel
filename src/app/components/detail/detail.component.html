@@ -1,0 +1,78 @@
+
+<div class="container">
+
+  <!-- Sin resultados -->
+  <div class="alert alert-warning alert-dismissible fade show mt-5" role="alert" *ngIf="noResults">
+      <strong>Opss..!</strong> No se encontró el personaje.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <!-- #Sin resultados -->
+
+  <div *ngIf="load">
+    <div class="mt-5 mb-4 text-center">
+      <h5>{{ personaje.name }}</h5>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 col-md-5">
+        <img [src]="personaje.thumbnail.path+'.'+personaje.thumbnail.extension" class="img-fluid rounded shadow" alt="">
+      </div>
+      <div class="col-sm-12 col-md-7">
+        <div class="ml-auto">
+          <h6>Fecha</h6>
+          <p>{{ personaje.modified | date:"dd/MM/yy" }}</p>
+          <div *ngIf="personaje.description">
+            <h6>Descripción:</h6>
+            <p>
+              {{ personaje.description }} 
+            </p>
+          </div>
+          <div *ngIf="stories.length > 0">
+            <h6>Historias:</h6>
+            <div class="border rounded p-2">
+              <div *ngFor="let storie of stories">
+                  <span class="badge badge-light">{{ storie.name }}</span>
+              </div>
+            </div>
+          </div>
+          <a class="btn btn-info mt-2" [routerLink]="['/home']" role="button">Volver</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="mt-5">
+          <h3 class="text-center">Cómics</h3>
+          <hr>
+          <div class="row">
+
+            <!-- Sin resultados -->
+            <div class="m-auto"> 
+              <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" *ngIf="noResultsComics">
+                  <strong>Opss..!</strong> No se encontraron cómics para {{ personaje.name }}.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+            </div>
+            <!-- #Sin resultados -->
+
+            <div class="col-sm-12 col-md-4" *ngFor="let comic of comics">
+              <div class="card my-2">
+                <img [src]="comic.images[0]?.path+'.'+comic.images[0]?.extension | imagen" class="card-img-top img-fluid" [alt]="personaje.id">
+                <div class="card-body text-center">
+                  <div class="card-title">
+                    <p class="card-text">{{ comic.title }}</p>
+                    <p class="card-text">{{ comic.modified | date:"dd/MM/yy" }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
